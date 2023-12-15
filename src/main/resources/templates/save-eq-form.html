@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title>Saving Equation</title>
+        <link rel="stylesheet" th:href="@{styles.css}">
+    </head>
+    <body>
+        <h2>Enter an equation</h2>
+        <a href="/">Go Back</a><br><br>
+        <form action="saveEquation" method="POST">
+            <label>Equation:</label><br>
+            <input type="text" name="val"/><br>
+            <input type="submit" value="Submit"/>
+        </form>
+    </body>
+</html>

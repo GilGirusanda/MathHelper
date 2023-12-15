@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title>Equations</title>
+        <link rel="stylesheet" th:href="@{styles.css}">
+    </head>
+    <body>
+        <h2>Equation List</h2>
+        <a href="/">Go Back</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Equation ID</th>
+                    <th>Equation Value</th>
+                    <!-- Add more table headers as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate over the list of equations -->
+                <tr th:each="equation : ${equations}">
+                    <td th:text="${equation.id}"></td>
+                    <td th:text="${equation.value}"></td>
+                    <!-- Add more table data columns as needed -->
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
+
+
