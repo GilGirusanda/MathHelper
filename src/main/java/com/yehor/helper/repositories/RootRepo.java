@@ -10,8 +10,8 @@ import com.yehor.helper.models.Root;
 @Repository
 public interface RootRepo extends JpaRepository<Root, Long> {
 
-    List<Root> findAllByValue(Double value);
+    List<Root> findAllByRootValue(Double value);
 
-    Root findByValue(Double value);
+    Root findByRootValue(Double value);
 
 }

@@ -7,7 +7,7 @@ import com.yehor.helper.models.Root;
 
 public interface RootService {
 
-    void save(Double value, Equation equationEntity);
+    Root save(Double value, Equation equationEntity);
 
     List<Root> findAllByValue(Double root);
 

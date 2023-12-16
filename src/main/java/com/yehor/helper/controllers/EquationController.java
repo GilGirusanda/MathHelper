@@ -39,8 +39,6 @@ public class EquationController {
             return "redirect:/error";
         }
 
-        // Redirect to the primary view of /save
-        // redirectAttributes.addFlashAttribute("message", "Data saved successfully!");
         return "redirect:/";
     }
 
@@ -50,7 +48,9 @@ public class EquationController {
     }
 
     @PostMapping("/processEquation")
-    public String processEquation(@RequestParam("val") String val, @RequestParam("root") Double root,
+    public String processEquation(
+            @RequestParam("val") String val,
+            @RequestParam("root") Double root,
             RedirectAttributes redirectAttributes) {
         // Process the form data
         boolean isSuccessful = equationService.processEquation(val, root);
@@ -58,8 +58,6 @@ public class EquationController {
             return "redirect:/error";
         }
 
-        // Redirect to the primary view of /save
-        // redirectAttributes.addFlashAttribute("message", "Data saved successfully!");
         return "redirect:/";
     }
 
@@ -69,7 +67,8 @@ public class EquationController {
     }
 
     @PostMapping("/findEquationsByRoots")
-    public String findEquationsByRoots(@RequestParam("roots") String roots,
+    public String findEquationsByRoots(
+            @RequestParam("roots") String roots,
             RedirectAttributes redirectAttributes) {
         List<Equation> equations = equationService.findEquationsByAnyRootFromArray(roots.split("\\s+"));
 
@@ -92,6 +91,22 @@ public class EquationController {
         return "redirect:/equations";
     }
 
+    @GetMapping("/findEquationsWithMultipleRoots")
+    public String showFindEqWithMultipleRootsForm() {
+        return "find-eq-by-multiple-roots-form";
+    }
+
+    @PostMapping("/findEquationsWithMultipleRoots")
+    public String findEquationsWithMultipleRoots(
+            @RequestParam("roots") String roots,
+            RedirectAttributes redirectAttributes) {
+        List<Equation> equations = equationService.findEquationsWithMultipleRootsFromArray(roots.split("\\s+"));
+
+        redirectAttributes.addFlashAttribute("equations", equations);
+
+        return "redirect:/equations";
+    }
+
     @GetMapping("/equations")
     public String showEquations(Model model) {
         // Retrieve redirected attributes, if any
@@ -104,14 +119,6 @@ public class EquationController {
 
         model.addAttribute("equations", equations);
 
-        return "equations"; // Return the name of the Thymeleaf template to render equations
+        return "equations";
     }
-
-    // @PostMapping("/saveEquation")
-    // public ModelAndView saveData(@ModelAttribute String val) {
-    // ModelAndView mav = new ModelAndView();
-    // mav.setViewName("save-eq-form");
-    // mav.addObject("val", val);
-    // return mav;
-    // }
 }

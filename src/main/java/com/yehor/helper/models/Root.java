@@ -15,8 +15,8 @@ public class Root {
     @SequenceGenerator(name = "root_id_seq", sequenceName = "root_id_seq", initialValue = 1, allocationSize = 1)
     private Long id;
 
-    @Column(name = "value", nullable = false)
-    private Double value;
+    @Column(name = "root_value", nullable = false)
+    private Double rootValue;
 
     @ManyToOne
     @JoinColumn(name = "equation_id", nullable = false)

@@ -34,12 +34,8 @@ public class EquationSolverServiceImpl {
     }
 
     public static boolean validate(String equation) {
-        // Перевіряємо чи дужки та оператори правильні
-        if (checkParentheses(equation) && checkOperators(equation)) {
-            return true;
-        } else {
-            return false;
-        }
+        // Check if brackets and operators are written correctly
+        return checkParentheses(equation) && checkOperators(equation);
     }
 
     private static boolean checkParentheses(String equation) {
@@ -49,23 +45,22 @@ public class EquationSolverServiceImpl {
                 openCount++;
             } else if (ch == ')') {
                 if (openCount == 0) {
-                    return false; // Закрита дужка без відповідної відкритої
+                    return false; // closed bracket without the correspondent open one
                 }
                 openCount--;
             }
         }
-        return openCount == 0; // Повертає true, якщо кількість відкритих і закритих дужок однакова
+        return openCount == 0; // Returns true, if the quantity of open and closed brackets is equal
     }
 
     private static boolean checkOperators(String equation) {
-        // Реалізація перевірки правильності операторів
-        // Повертає true, якщо оператори введено коректно, інакше - false
+        // Check correctness of operators
+        // Returns true, if operators are written correctly, else - false
         for (int i = 0; i < equation.length() - 1; i++) {
             char current = equation.charAt(i);
             char next = equation.charAt(i + 1);
 
-            // Перевірка на два підряд йдучих оператори (крім - і +, які можуть бути у
-            // виразі)
+            // Check sequential operators (except for - і +, which are allowed)
             if (("+-*/".indexOf(current) != -1 && "*/".indexOf(next) != -1) ||
                     ("-".indexOf(current) != -1 && "*/+".indexOf(next) != -1)) {
                 return false;
@@ -159,6 +154,7 @@ public class EquationSolverServiceImpl {
     }
 
     public static boolean preValidate(String expression) {
+        // Performs only validation part
         String[] splittedExpr = expression.split("=");
 
         if (!validate(splittedExpr[0]) || !validate(splittedExpr[1]) ||
@@ -173,6 +169,11 @@ public class EquationSolverServiceImpl {
     public static boolean solve(String expression, double x) {
         String[] splittedExpr = expression.split("=");
 
+        if(splittedExpr.length > 2) {
+            log.info(expression + " - is not valid");
+            return false;
+        }
+
         if (!validate(splittedExpr[0]) || !validate(splittedExpr[1]) ||
                 Objects.isNull(splittedExpr[0]) || Objects.isNull(splittedExpr[1])) {
             log.info(expression + " - is not valid");
@@ -182,10 +183,11 @@ public class EquationSolverServiceImpl {
         return !isNumeric(splittedExpr[0]) ? solveLHS(splittedExpr, x) : solveRHS(splittedExpr, x);
     }
 
-    private static boolean solveRHS(String[] splittedExpr, double x) {
+    public static boolean solveRHS(String[] splittedExpr, double x) {
+        // Solves the right-hand side equation
         String equation = splittedExpr[1];
 
-        // Sanitize
+        // Sanitize the equation string
         equation = sanitize(equation, x);
 
         double result = 0;
@@ -200,16 +202,17 @@ public class EquationSolverServiceImpl {
         }
         log.info("Result of computing " + equation + " = " + result);
 
-        // Check
+        // Checks if the entered root is correct
         boolean isRoot = Math.abs(Double.parseDouble(splittedExpr[0]) - result) <= Math.pow(10, -9);
         log.info("isRoot: " + isRoot);
         return isRoot;
     }
 
-    private static boolean solveLHS(String[] splittedExpr, double x) {
+    public static boolean solveLHS(String[] splittedExpr, double x) {
+        // Solves the left-hand side equation
         String equation = splittedExpr[0];
 
-        // Sanitize
+        // Sanitize an equation string
         equation = sanitize(equation, x);
 
         double result = 0;
@@ -224,7 +227,7 @@ public class EquationSolverServiceImpl {
         }
         log.info("Result of computing " + equation + " = " + result);
 
-        // Check
+        // Checks if the entered root is correct
         boolean isRoot = Math.abs(Double.parseDouble(splittedExpr[1]) - result) <= Math.pow(10, -9);
         log.info("isRoot: " + isRoot);
         return isRoot;

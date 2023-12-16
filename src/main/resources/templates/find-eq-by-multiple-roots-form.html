@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title>Find Equations</title>
+        <link rel="stylesheet" th:href="@{styles.css}">
+    </head>
+    <body>
+        <h2>Find equations by entered roots in strict mode</h2>
+        <a href="/">Go Back</a><br><br>
+        <form action="findEquationsWithMultipleRoots" method="POST">
+            <label>Roots (separated by spaces):</label><br>
+            <input type="text" name="roots"/><br>
+            <input type="submit" value="Find"/>
+        </form>
+    </body>
+</html>

@@ -18,8 +18,8 @@ public class Equation {
     @SequenceGenerator(name = "equation_id_seq", sequenceName = "equation_id_seq", initialValue = 1, allocationSize = 1)
     private Long id;
 
-    @Column(name = "value", nullable = false, length = 255)
-    private String value;
+    @Column(name = "equation_value", nullable = false, length = 255)
+    private String equationValue;
 
     @OneToMany(mappedBy = "equation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Root> rootSet = new HashSet<Root>();

@@ -9,11 +9,13 @@ public interface EquationService {
 
     boolean processEquation(String val, Double root);
 
-    void saveEquation(String eq);
+    Equation saveEquation(String eq);
 
     List<Equation> findEquationsWithSingleRoot();
 
     List<Equation> findEquationsByAnyRootFromArray(String[] roots);
+
+    List<Equation> findEquationsWithMultipleRootsFromArray(String[] roots);
 
     Equation findEquationByRoot(Double root);
 
